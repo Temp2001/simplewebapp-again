@@ -17,8 +17,34 @@ namespace SimpleWebAppMVC.Test
         [Fact]
         public void Get_WithEmptyString_ShouldReturnNotFound()
         {
+            string input = string.Empty;
 
+            using AppDbContext dbContext = new AppDbContext(Options, isTest: true);
+
+            TasksApiController sut = new TasksApiController(dbContext);
+
+            IActionResult result = sut.Get(input);
+
+            result.ShouldBeOfType<NotFoundResult>();
         }
+
+        [Fact]
+        public void Get_WithValidInput_ShouldInput()
+        {
+            string input = "1";
+
+            using AppDbContext dbContext = new AppDbContext(Options, isTest: true);
+
+            SetupContext(dbContext);
+
+            TasksApiController sut = new TasksApiController(dbContext);
+
+            var result = sut.Get(input) as JsonResult;
+            var task = result.Value as Models.Task;
+
+            task.Id.ShouldBe(input);
+        }
+
 
         private static void SetupContext(AppDbContext context)
         {
