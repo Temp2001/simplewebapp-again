@@ -22,7 +22,7 @@ namespace SimpleWebAppMVC.Controllers
         }
 
         // GET /Home/About
-        public IActionResult About()
+        public About About()
         {
             string          location    = Assembly.GetExecutingAssembly().Location;
             FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(location);
@@ -35,7 +35,7 @@ namespace SimpleWebAppMVC.Controllers
                 Version   = ("Version " + versionInfo.ProductVersion)
             };
 
-            return View(model);
+            return model;
         }
 
         // GET /Home/API

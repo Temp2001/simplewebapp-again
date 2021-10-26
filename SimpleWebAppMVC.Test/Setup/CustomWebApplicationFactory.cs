@@ -17,6 +17,8 @@ namespace SimpleWebAppMVC.Test.Setup
 
                 var env = sp.GetService<IWebHostEnvironment>();
 
+                //TODO change here!
+
                 var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
                 optionsBuilder.UseSqlServer(IsLocal(env)
                     ? "Server=<YOURSERVER>;Database=simplewebappdb;Integrated Security=true;MultipleActiveResultSets=True;"

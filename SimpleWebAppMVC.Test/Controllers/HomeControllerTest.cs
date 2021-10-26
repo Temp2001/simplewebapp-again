@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
+// sut = System Under Test
+
 namespace SimpleWebAppMVC.Test
 {
     public class HomeControllerTest
@@ -33,7 +35,7 @@ namespace SimpleWebAppMVC.Test
                 new SocialData(), new SocialData(), new SocialData(), new SocialData()
             });
 
-            var sut = new HomeController(socialService, configuration);
+            var sut = new HomeController(socialService, configuration); 
 
             var result = sut.SocialMedia(feedCount) as ViewResult;
 
@@ -41,10 +43,24 @@ namespace SimpleWebAppMVC.Test
             var socialFeed = result.ViewData["social-data"] as List<SocialData>;
 
             socialFeed.Count().ShouldBe(feedCount);
-
         }
 
+        [Fact]
+        public void About_NoInput_ShouldReturnCorrectAppName()
+        {
+            string expected = "MyAppName";
 
+            var configuration = Substitute.For<IConfiguration>();
+
+            var socialService = Substitute.For<ISocialService>();
+
+            var sut = new HomeController(socialService, configuration);
+
+            var result = sut.About();
+
+            result.AppName.ShouldBe(expected);
+
+        }
 
         private static void SetupContext(AppDbContext context)
         {
